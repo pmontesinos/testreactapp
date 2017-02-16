@@ -26,6 +26,7 @@
     "react": "^0.13.1"
   },
   "devDependencies": {
+    "axios": "^0.15.3",
     "babel": "^5.0.12",
     "babel-core": "^5.0.12",
     "babel-loader": "^5.0.0",
