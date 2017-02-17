@@ -1,4 +1,5 @@
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import Debug from 'debug';
 
 import AppRoot from './components/AppRoot';
@@ -37,7 +38,7 @@ class App {
     // render to DOM
     if(element) {
       debug('render to DOM');
-      React.render(appRootElement, element);
+      ReactDOM.render(appRootElement, element);
       return;
     }
 

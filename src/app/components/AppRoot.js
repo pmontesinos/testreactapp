@@ -1,4 +1,5 @@
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import Cart from './Cart';
 import Gallery from './Gallery';
 
@@ -30,9 +31,7 @@ class AppRoot extends React.Component {
    */
   render () {
     return <div className="appRoot">
-      <h1>{config.title}</h1>
-      <p>This is starting</p>
-      <Cart cart={this.props.state.cart} />
+      <h1 className="text-center">{config.title}</h1>
       <Gallery />
     </div>;
   }

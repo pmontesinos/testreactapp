@@ -1,6 +1,10 @@
+body {
+	background-color: #F7F7F7 !important;
+}
+
 
 .appRoot {
-  border: 2px solid blue;
+  //border: 2px solid blue;
   padding: 10px;
 }
 
