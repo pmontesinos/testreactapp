@@ -2,6 +2,10 @@ body {
 	background-color: #F7F7F7 !important;
 }
 
+.description-section {
+	margin: 20px auto;
+	width: 300px;
+}
 
 .appRoot {
   //border: 2px solid blue;

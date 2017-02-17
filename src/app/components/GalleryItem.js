@@ -52,9 +52,18 @@ class GalleryItem extends React.Component {
 				style={customStyles}
 				contentLabel="Example Modal"
 				>
-				  <h2 ref="subtitle">{this.props.alt}</h2>
-				    <button onClick={this.closeModal}>close</button>
-				    <img className="float-center" src={this.props.url} alt={this.props.alt} />
+					<h2 ref="subtitle">{this.props.alt}</h2>
+					<button onClick={this.closeModal}>close</button>
+					<img className="float-center" src={this.props.url} alt={this.props.alt} />
+			    	    	<div className="description-section float-center">
+				    	    	<div className="input-group">
+				    	    		<label for="input-{this.props.key}" className="input-group-label"></label>
+				    	    		<input type="text" id="input-{this.props.key}" className="input-group-field" />
+				    	    		<div className="input-group-button">
+				    	    			<button className="button tiny">Add description</button>
+				    	    		</div>
+				    	    	</div>
+					</div>
 				</Modal>
 			</div>
 		);
