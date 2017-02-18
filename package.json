@@ -19,6 +19,10 @@
   "bugs": {
     "url": "https://github.com/RisingStack/react-way-getting-started/issues"
   },
+  "engineStrict": true,
+  "engines": {
+      "node": "0.12.7"
+  },
   "homepage": "https://github.com/RisingStack/react-way-getting-started",
   "dependencies": {
     "debug": "^2.1.3",
