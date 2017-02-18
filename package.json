@@ -21,7 +21,7 @@
   },
   "engineStrict": true,
   "engines": {
-      "node": "0.12.7"
+      "node": "4.4.5"
   },
   "homepage": "https://github.com/RisingStack/react-way-getting-started",
   "dependencies": {
