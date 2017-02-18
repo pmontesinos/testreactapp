@@ -19,7 +19,6 @@
   "bugs": {
     "url": "https://github.com/RisingStack/react-way-getting-started/issues"
   },
-  "engineStrict": true,
   "engines": {
     "node": "4.4.5"
   },
