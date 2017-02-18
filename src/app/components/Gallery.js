@@ -6,78 +6,100 @@ import Debug from 'debug';
 import GalleryItem from './GalleryItem';
 var debug = Debug('Gallery');
 
+let photos = localStorage.getItem('photos') || '[]';
+
 class Gallery extends React.Component {
 
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
 
-    this.state = {
-      photos: [],
-      loading: true,
-      error: null
-    };
-  }
+		this.state = {
+			photos: JSON.parse(photos),
+			loading: true,
+			error: null,
+			photosExist: false
+		};
 
-  componentDidMount() {
-    // Remove the 'www.' to cause a CORS error (and see the error state)
-    axios.get(`https://jsonplaceholder.typicode.com/photos`)
-      .then(res => {
-        // Transform the raw data by extracting the nested posts
-        //const photos = res.data.map(obj => obj);
-        const photos = res.data.slice(0, 25);
-        console.log(photos);
-         this.setState({
-          photos,
-          loading: false,
-          error: null
-        });
-      })
-      .catch(err => {
-        console.log('error downloading');
-        this.setState({
-          loading: false,
-          error: err
-        });
-      });
-  }
+		if ( this.state.photos.length > 0 ) {
+			this.state = {
+				photos: JSON.parse(photos),
+				loading: false,
+				error: null,
+				photosExist: true
+			};
+		}
 
-  renderLoading() {
-    return <div>Loading...</div>;
-  }
+		this.onAddDescription = this.onAddDescription.bind(this);
+	}
 
-  renderError() {
-    return (
-      <div>
-        Uh oh: {this.state.error.message}
-      </div>
-    );
-  }
+	componentDidMount() {
+		if ( this.state.photosExist === false ) {
+			axios.get(`https://jsonplaceholder.typicode.com/photos`)
+			.then(res => {
+				const photosFromCall = res.data.slice(0, 25);
 
-  renderPhotos() {
-    if(this.state.error) {
-      return this.renderError();
-    }
-    var cols = [];
-    this.state.photos.forEach(photo => cols.push( <GalleryItem key={photo.id} thumbnailUrl={photo.thumbnailUrl} alt={photo.title} url={photo.url} /> ));
+				localStorage.setItem( 'photos', JSON.stringify(photosFromCall) );
 
-    return (
-      <div>
-        <div className="row small-up-1 medium-up-2 large-up-5">
-         {cols}
-        </div>
-       </div>
-    );
-  }
+				this.setState({
+					photos: photosFromCall,
+					loading: false,
+					error: null
+				});
+			})
+			.catch(err => {
+				this.setState({
+					loading: false,
+					error: err
+				});
+			});
+		}
+	}
 
-  render () {
+	onAddDescription( id, description ) {
+		for (var i in this.state.photos) {
+			if (this.state.photos[i].id === id) {
+				this.state.photos[i].description = description;
+				localStorage.setItem( 'photos', JSON.stringify(this.state.photos) );
+				break;
+			}
+		}
+	}
 
-    return <div className="gallery">
-      <h2 className="text-center">Gallery</h2>
-      {this.state.loading ?
-          this.renderLoading()
-          : this.renderPhotos()}
-    </div>;
-  }
-}
+	renderLoading() {
+		return <div>Loading...</div>;
+	}
+
+	renderError() {
+		return (
+			<div>Uh oh: {this.state.error.message}</div>
+		);
+	}
+
+	renderPhotos() {
+		if(this.state.error) {
+			return this.renderError();
+		}
+		var cols = [];
+		this.state.photos.forEach(photo => cols.push( <GalleryItem key={photo.id} id={photo.id} thumbnailUrl={photo.thumbnailUrl} alt={photo.title} url={photo.url} onAddDescription={this.onAddDescription} description={photo.description} /> ));
+
+		return (
+			<div>
+				<div className="row small-up-1 medium-up-2 large-up-5">
+					{cols}
+				</div>
+			</div>
+		);
+	}
+
+	render () {
+
+		return <div className="gallery">
+			<h2 className="text-center">Gallery</h2>
+				{this.state.loading ?
+				this.renderLoading()
+				: this.renderPhotos()}
+			</div>;
+		}
+	}
 
 export default Gallery;

@@ -6,66 +6,37 @@ import AppRoot from './components/AppRoot';
 
 var debug = Debug('myApp');
 
-/*
- * @class App
- */
 class App {
 
-  /*
-   * @constructs App
-   * @param {Object} options
-   */
-  constructor(options) {
-    debug('create app with options', options);
+	render (element) {
 
-    this.state = options.state;
-  }
+		debug('render app with state', this.state);
 
-  /*
-   * @method render
-   * @param {DOM} [element]
-   * @returns {String|undefined}
-   */
-   render (element) {
+		var appRootElement = React.createElement(AppRoot, {
+			state: this.state
+		});
 
-    debug('render app with state', this.state);
+		if(element) {
+			debug('render to DOM');
+			ReactDOM.render(appRootElement, element);
+			return;
+		}
 
-    // would be in JSX: <AppRoot state={this.state} />
-    var appRootElement = React.createElement(AppRoot, {
-      state: this.state
-    });
+		debug('render to string');
+		return React.renderToString(appRootElement);
+	}
 
-    // render to DOM
-    if(element) {
-      debug('render to DOM');
-      ReactDOM.render(appRootElement, element);
-      return;
-    }
+	renderToDOM (element) {
+		if(!element) {
+			return debug(new Error('App.renderToDOM: element is required'));
+		}
 
-    // render to string
-    debug('render to string');
-    return React.renderToString(appRootElement);
-  }
+		this.render(element);
+	}
 
-  /*
-   * @method render
-   * @param {DOM} element
-   */
-   renderToDOM (element) {
-    if(!element) {
-      return debug(new Error('App.renderToDOM: element is required'));
-    }
-
-    this.render(element);
-   }
-
-  /*
-   * @method renderToString
-   * @returns {String}
-   */
-   renderToString () {
-    return this.render();
-  }
+	renderToString () {
+		return this.render();
+	}
 }
 
 export default App;
